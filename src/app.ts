@@ -1,13 +1,19 @@
 import express from 'express';
-import routes from './routes';
+import { dollar } from './routes';
 
 class App {
 	public server;
+	public paths;
+	public services: () => void;
 
 	constructor() {
 		this.server = express();
 		this.middlewares();
+		this.paths = {
+			dollar: '/api/dollar',
+		};
 		this.routes();
+		this.services();
 	}
 
 	middlewares() {
@@ -15,7 +21,7 @@ class App {
 	}
 
 	routes() {
-		this.server.use(routes);
+		this.server.use(this.paths.dollar, dollar);
 	}
 }
 
