@@ -1,10 +1,11 @@
 import express from 'express';
 import { dollar } from './routes';
+import googleShetsService from './services/google-sheets';
+import { updateValueCellDollarBlue } from './controllers';
 
 class App {
 	public server;
 	public paths;
-	public services: () => void;
 
 	constructor() {
 		this.server = express();
@@ -14,10 +15,15 @@ class App {
 		};
 		this.routes();
 		this.services();
+		updateValueCellDollarBlue();
 	}
 
 	middlewares() {
 		this.server.use(express.json());
+	}
+
+	services() {
+		googleShetsService;
 	}
 
 	routes() {
