@@ -1,6 +1,5 @@
 import express from 'express';
 import { dollar } from './routes';
-import googleShetsService from './services/google-sheets';
 import { updateValueCellDollarBlue } from './controllers';
 
 class App {
@@ -14,16 +13,11 @@ class App {
 			dollar: '/api/dollar',
 		};
 		this.routes();
-		this.services();
-		updateValueCellDollarBlue();
+		setInterval(updateValueCellDollarBlue, 20000);
 	}
 
 	middlewares() {
 		this.server.use(express.json());
-	}
-
-	services() {
-		googleShetsService;
 	}
 
 	routes() {
