@@ -1,6 +1,6 @@
 import express from 'express';
 import { dollar } from './routes';
-import { updateSchedule } from './services/update-schedule';
+import { updateScheduleAllDays } from './services/update-schedule';
 
 class App {
 	public server;
@@ -15,7 +15,7 @@ class App {
 		this.routes();
 
 		//make this call to update the dollar value every hour between 10am and 4pm from Monday to Friday
-		updateSchedule();
+		updateScheduleAllDays(840000);
 	}
 
 	middlewares() {
