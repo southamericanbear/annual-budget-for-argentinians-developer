@@ -9,7 +9,8 @@ class GoogleSheetsServie {
 	private spreadsheetId = process.env.GOOGLE_SPREED_SHEET_ID;
 	constructor() {
 		this.auth = new google.auth.GoogleAuth({
-			keyFile: 'credentials.json',
+			//	keyFile: 'credentials.json',
+			keyFile: '/etc/secrets/credentials.json',
 			scopes: 'https://www.googleapis.com/auth/spreadsheets',
 		});
 		this.getClient();
