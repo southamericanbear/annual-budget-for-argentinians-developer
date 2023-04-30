@@ -3,6 +3,6 @@
 require('dotenv').config();
 import app from './app';
 
-app.listen(1990, () => {
+app.listen(8080, () => {
 	console.log('🚀 Server started on port 1990!');
 });
