@@ -1,6 +1,6 @@
 import express from 'express';
 import { dollar } from './routes';
-import { updateValueCellDollarBlue } from './controllers';
+import { updateSchedule } from './services/update-schedule';
 
 class App {
 	public server;
@@ -13,7 +13,9 @@ class App {
 			dollar: '/api/dollar',
 		};
 		this.routes();
-		setInterval(updateValueCellDollarBlue, 20000);
+
+		//make this call to update the dollar value every hour between 10am and 4pm from Monday to Friday
+		updateSchedule();
 	}
 
 	middlewares() {
