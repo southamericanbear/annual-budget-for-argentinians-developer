@@ -6,8 +6,8 @@
 	"license": "MIT",
 	"scripts": {
 		"build": "tsc --project ./",
-		"start:dev": "nodemon src/server.ts",
-		"start:prod": "node dist/server.js",
+		"dev": "nodemon src/server.ts",
+		"prod": "node dist/server.js",
 		"format": "prettier --write .",
 		"lint": "eslint --fix . --ext .ts"
 	},
