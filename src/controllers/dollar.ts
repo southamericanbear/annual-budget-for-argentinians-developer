@@ -14,9 +14,17 @@ export const getValueCellDollarBlue = async (): Promise<number> => {
 
 export const updateValueCellDollarBlue = async (): Promise<void> => {
 	try {
+		const currentValue = await getValueCellDollarBlue();
+
 		const { venta: value } = await getDollarBlueValue();
-		await googleSheetsService.updateSpecificCell('budget!I2:I2', value);
-		console.log('Dolar blue actualizado...👀');
+
+		if (currentValue === value.toString()) {
+			console.log('Dolar blue sin cambios...😮‍💨');
+			return;
+		} else {
+			await googleSheetsService.updateSpecificCell('budget!I2:I2', value);
+			console.log('Dolar blue actualizado...👀');
+		}
 	} catch (error) {
 		console.log('😵 something went wrong');
 		console.log(error);
