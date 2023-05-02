@@ -1,6 +1,7 @@
 import express from 'express';
 import { dollar } from './routes';
 import { updateScheduleWeekDays } from './services/update-schedule';
+import { keepAlive } from './services/keep-alive';
 
 class App {
 	public server;
@@ -14,6 +15,7 @@ class App {
 		};
 		this.routes();
 
+		keepAlive()
 		updateScheduleWeekDays(600000);
 	}
 
