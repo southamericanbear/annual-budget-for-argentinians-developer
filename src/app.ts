@@ -15,7 +15,7 @@ class App {
 		};
 		this.routes();
 
-		keepAlive()
+		keepAlive();
 		updateScheduleWeekDays(600000);
 	}
 

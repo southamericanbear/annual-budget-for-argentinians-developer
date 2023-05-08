@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Compute } from 'google-auth-library';
 import { JSONClient } from 'google-auth-library/build/src/auth/googleauth';
 import { google, sheets_v4 } from 'googleapis';
@@ -22,7 +23,7 @@ class GoogleSheetsServie {
 	}
 
 	async getGoogleSheets() {
-		this.googleSheets = google.sheets({ version: 'v4', auth: this.client });
+		this.googleSheets = this.googleSheets = google.sheets({ version: 'v4', auth: this.client as any as string });
 	}
 
 	async getSepecificCell(range: string) {

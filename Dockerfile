@@ -4,5 +4,5 @@ COPY package*.json ./
 RUN yarn
 COPY . .
 RUN yarn build
-EXPOSE 8080
+EXPOSE 1990
 CMD ["node", "dist/server.js"]
