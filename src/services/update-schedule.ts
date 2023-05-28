@@ -7,7 +7,7 @@ export const updateScheduleWeekDays = (interval: number) => {
 		const date = new Date();
 		const dayOfWeek = date.getDay();
 		const hourOfDay = date.getHours();
-		if (dayOfWeek >= 1 && dayOfWeek <= 5 && hourOfDay >= 10 && hourOfDay <= 16) {
+		if (dayOfWeek >= 1 && dayOfWeek <= 5 && hourOfDay >= 10 && hourOfDay <= 18) {
 			// USAR LA API DE https://github.com/pjnovas/nolaborables PARA SABER SI HOY ES FERIADO O NO Y EVITAR LLAMAR A CAMBIAR EL DOLAR
 			updateValueCellDollarBlue();
 		} else {
