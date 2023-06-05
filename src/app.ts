@@ -1,5 +1,5 @@
 import express from 'express';
-import { dollar } from './routes';
+import { dollar, taxes } from './routes';
 import { updateScheduleWeekDays } from './services/update-schedule';
 import { keepAlive } from './services/keep-alive';
 
@@ -12,6 +12,7 @@ class App {
 		this.middlewares();
 		this.paths = {
 			dollar: '/api/dollar',
+			taxes: '/api/taxes',
 		};
 		this.routes();
 
@@ -25,6 +26,7 @@ class App {
 
 	routes() {
 		this.server.use(this.paths.dollar, dollar);
+		this.server.use(this.paths.taxes, taxes);
 	}
 }
 
