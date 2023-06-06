@@ -1,6 +1,10 @@
+
+.DS_Store
 node_modules
 .env
 credentials.json
 dist
 etc
 coverage
+local
+
