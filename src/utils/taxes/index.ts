@@ -1,7 +1,7 @@
 import { promises as fsPromises } from 'fs';
 import { resolve as pathResolve } from 'path';
 import pdf from 'pdf-parse';
-export const getTotalTaxesMonth = async (year: string, month: string): Promise<number> => {
+export const getTotalTaxesMonth = async (year: string, month: string): Promise<{ numberOfInovices: number; totalInvoices: number }> => {
 	const invoiceDir = `./local/${year}/${month}`;
 	const invoiceFiles = await fsPromises.readdir(invoiceDir);
 
@@ -27,5 +27,8 @@ export const getTotalTaxesMonth = async (year: string, month: string): Promise<n
 		throw error;
 	});
 
-	return subtotalNumber;
+	return {
+		numberOfInovices: invoiceFiles.length,
+		totalInvoices: subtotalNumber,
+	};
 };
