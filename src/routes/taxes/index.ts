@@ -2,9 +2,12 @@ import { Router } from 'express';
 import { getTotalTaxesMonth } from '../../utils/taxes';
 const routes = Router();
 
-routes.get('/handle-taxes', async (req, res) => {
+routes.get('/get-taxes-stats', async (req, res) => {
+	const { year, month } = req.query;
+	// const cloudinaryUrl = process.env.CLOUDINARY_URL;
+
 	try {
-		const total = await getTotalTaxesMonth('2023', 'junio');
+		const total = await getTotalTaxesMonth(year as string, month as string);
 		res.status(200).send({ total });
 	} catch (error) {
 		res.status(404).send(error);

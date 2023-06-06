@@ -16,8 +16,11 @@
 	"dependencies": {
 		"@google-cloud/local-auth": "2.1.0",
 		"axios": "^1.4.0",
+		"cloudinary": "^1.37.0",
+		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
 		"express": "^4.18.2",
+		"express-validator": "^7.0.1",
 		"googleapis": "105",
 		"pdf-parse": "^1.1.1"
 	},
