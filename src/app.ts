@@ -1,7 +1,9 @@
 import express from 'express';
+import cors from 'cors';
 import { dollar, taxes } from './routes';
 import { updateScheduleWeekDays } from './services/update-schedule';
 import { keepAlive } from './services/keep-alive';
+import fileUpload from 'express-fileupload';
 
 class App {
 	public server;
@@ -21,7 +23,15 @@ class App {
 	}
 
 	middlewares() {
+		this.server.use(cors());
 		this.server.use(express.json());
+		this.server.use(
+			fileUpload({
+				useTempFiles: true,
+				tempFileDir: '/tmp/',
+				createParentPath: true,
+			})
+		);
 	}
 
 	routes() {
