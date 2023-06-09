@@ -1,7 +1,5 @@
-import { Router, Request, Response } from 'express';
-import { check } from 'express-validator';
+import { Router } from 'express';
 import { getTotalTaxesMonth } from '../../utils/taxes';
-import { checkFile, validationFields } from '../../middlewares';
 const routes = Router();
 
 routes.get('/get-taxes-stats', async (req, res) => {
@@ -14,22 +12,5 @@ routes.get('/get-taxes-stats', async (req, res) => {
 		res.status(404).send(error);
 	}
 });
-
-routes.post(
-	'/upload-invoice',
-	[
-		// validationJWT,
-		checkFile,
-		check('year', 'Year is required').not().isEmpty(),
-		check('month', 'Month is required').not().isEmpty(),
-		validationFields,
-	],
-	async (req: Request, res: Response) => {
-		const { year, month } = req.query;
-		// const cloudinaryUrl = process.env.CLOUDINARY_URL;
-
-		res.send({ year, month });
-	}
-);
 
 export const taxes = routes;
