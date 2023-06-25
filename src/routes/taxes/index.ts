@@ -20,9 +20,11 @@ routes.get('/get-taxes-stats', async (req, res) => {
 
 routes.get('/get-invoices', async (req, res) => {
 	const firebaseService = new FirebaseService();
+	const { folder } = req.query;
 	try {
-		const invoices = await firebaseService.getFiles('invoices/2023/june');
-		res.status(200).send(invoices);
+		const invoices = await firebaseService.getFiles(folder as string);
+		if (!invoices.length) return res.status(404).send('no invoices found');
+		return res.status(200).send(invoices);
 	} catch (error) {
 		return error;
 	}

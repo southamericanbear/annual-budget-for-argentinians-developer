@@ -10,8 +10,10 @@ export default class FirebaseService {
 	}
 
 	async getFiles(folder: string) {
-		const list = await listAll(ref(this.storage, `files/${folder}`));
-		return list;
+		const storeRef = ref(this.storage, `files/${folder}`);
+		const { items } = await listAll(storeRef);
+		const urls = await Promise.all(items.map((item) => getDownloadURL(item)));
+		return urls;
 	}
 
 	async uploadFiles(folder: string, month: string, year: string, files: Express.Multer.File[]) {
