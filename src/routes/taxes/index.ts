@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { updateValueCellInvoices } from '../../controllers';
 import multer from 'multer';
-import { uploadFiles } from '../../utils';
+import { updateValueCellInvoices } from '../../controllers';
+import FirebaseService from '../../services/firebase-service';
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -18,10 +18,23 @@ routes.get('/get-taxes-stats', async (req, res) => {
 	}
 });
 
+routes.get('/get-invoices', async (req, res) => {
+	const firebaseService = new FirebaseService();
+	const { folder } = req.query;
+	try {
+		const invoices = await firebaseService.getFiles(folder as string);
+		if (!invoices.length) return res.status(404).send('no invoices found');
+		return res.status(200).send(invoices);
+	} catch (error) {
+		return error;
+	}
+});
+
 routes.post('/upload-invoice', upload.array('invoices'), async (req, res) => {
 	const invoices = req.files as Express.Multer.File[];
+	const firebaseService = new FirebaseService();
 	try {
-		const urls = await uploadFiles('invoices', 'june', '2023', invoices);
+		const urls = await firebaseService.uploadFiles('invoices', 'june', '2023', invoices);
 		return res.status(200).json({ message: 'invoices uploaded', urls });
 	} catch (error) {
 		return error;
