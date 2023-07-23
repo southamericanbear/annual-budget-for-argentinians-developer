@@ -1,45 +1,62 @@
-import { Router } from 'express';
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
-
+import { Router, Request, Response } from 'express';
+import { createBudgetValidation } from '../../utils';
+import { getBudgets, getBudgetById, getTotalBudget, createBudget, updateBudget, deleteBudget } from '../../controllers';
 const routes = Router();
 
 routes.get('/', async (req, res) => {
 	try {
-		const budgets = await prisma.budget.findMany();
-
+		const budgets = await getBudgets();
 		res.status(200).json({ message: 'Budgets', budgets });
 	} catch (error) {
 		res.status(500).json(error.message);
 	}
 });
 
-routes.post('/create-budget', async (req, res) => {
+routes.get('/get-total', async (req, res) => {
 	try {
-		await prisma.budget.create({
-			data: {
-				...req.body,
-			},
-		});
-
-		res.status(200).json({ message: 'Budget created' });
+		const totalBudget = await getTotalBudget();
+		res.status(200).json({ message: 'Total budget', totalBudget });
 	} catch (error) {
 		res.status(500).json(error.message);
 	}
 });
 
-routes.put('/update-budget/:budgetId', async (req, res) => {
+routes.get('/:budgetId', async (req, res) => {
 	const { budgetId } = req.params;
-
 	try {
-		await prisma.budget.update({
-			where: { id: budgetId },
-			data: {
-				...req.body,
-			},
-		});
+		const budget = await getBudgetById(budgetId);
+		res.status(200).json({ message: 'Budget', budget });
+	} catch (error) {
+		res.status(500).json(error.message);
+	}
+});
 
-		res.status(200).json({ message: 'Budget updated' });
+routes.post('/', createBudgetValidation, async (req: Request, res: Response) => {
+	try {
+		const { body } = req;
+		const budget = await createBudget(body);
+		res.status(200).json({ message: 'Budget created', budget });
+	} catch (error) {
+		res.status(500).json(error.message);
+	}
+});
+
+routes.put('/:budgetId', async (req, res) => {
+	const { budgetId } = req.params;
+	const { body } = req;
+	try {
+		const budget = await updateBudget(budgetId, body);
+		res.status(200).json({ message: 'Budget updated', budget });
+	} catch (error) {
+		res.status(500).json(error.message);
+	}
+});
+
+routes.delete('/:budgetId', async (req, res) => {
+	const { budgetId } = req.params;
+	try {
+		const budgetDeletedId = await deleteBudget(budgetId);
+		return res.status(200).json({ message: 'Budget deleted', budgetDeletedId });
 	} catch (error) {
 		res.status(500).json(error.message);
 	}
