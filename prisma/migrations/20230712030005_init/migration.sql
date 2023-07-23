@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "BasicData" ALTER COLUMN "baseSalary" DROP DEFAULT,
+ALTER COLUMN "baseSalary" SET DATA TYPE TEXT;
