@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { dollar, taxes } from './routes';
+import { basicInfo, budgets, dollar, taxes } from './routes';
 import { updateScheduleWeekDays } from './services/update-schedule';
 import { keepAlive } from './services/keep-alive';
 
@@ -14,9 +14,10 @@ class App {
 		this.paths = {
 			dollar: '/api/dollar',
 			taxes: '/api/taxes',
+			basicInfo: '/api/basic-info',
+			budgets: '/api/budgets',
 		};
 		this.routes();
-
 		keepAlive();
 		updateScheduleWeekDays(600000);
 	}
@@ -29,6 +30,8 @@ class App {
 	routes() {
 		this.server.use(this.paths.dollar, dollar);
 		this.server.use(this.paths.taxes, taxes);
+		this.server.use(this.paths.basicInfo, basicInfo);
+		this.server.use(this.paths.budgets, budgets);
 	}
 }
 
