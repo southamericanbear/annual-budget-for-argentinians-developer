@@ -18,6 +18,7 @@ routes.get('/get-taxes-stats', async (req, res) => {
 	}
 });
 
+// add middleware to check if the file is an image
 routes.post('/upload-invoice', upload.array('invoices'), async (req, res) => {
 	const { year, month } = req.query;
 	const invoices = req.files as Express.Multer.File[];
