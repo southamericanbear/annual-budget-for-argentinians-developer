@@ -1,5 +1,5 @@
-import { budgetService } from '@/services';
-import { Budget } from '@/types';
+import { budgetService } from '../services';
+import { Budget } from '../types';
 
 export const getBudgets = async (): Promise<Budget[]> => {
 	const budgets = await budgetService.getBudgets();
@@ -9,6 +9,12 @@ export const getBudgets = async (): Promise<Budget[]> => {
 export const getBudgetById = async (budgetId: string): Promise<Budget> => {
 	const budget = await budgetService.getBudgetById(budgetId);
 	return budget as Budget;
+};
+
+export const getTotalBudget = async (): Promise<number> => {
+	const totalBudget = await budgetService.getTotalBudget();
+
+	return totalBudget;
 };
 
 export const createBudget = async (payload: Budget): Promise<Budget> => {

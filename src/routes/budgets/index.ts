@@ -1,12 +1,21 @@
 import { Router, Request, Response } from 'express';
 import { createBudgetValidation } from '../../utils';
-import { getBudgets, getBudgetById, createBudget, updateBudget, deleteBudget } from '../../controllers';
+import { getBudgets, getBudgetById, getTotalBudget, createBudget, updateBudget, deleteBudget } from '../../controllers';
 const routes = Router();
 
 routes.get('/', async (req, res) => {
 	try {
 		const budgets = await getBudgets();
 		res.status(200).json({ message: 'Budgets', budgets });
+	} catch (error) {
+		res.status(500).json(error.message);
+	}
+});
+
+routes.get('/get-total', async (req, res) => {
+	try {
+		const totalBudget = await getTotalBudget();
+		res.status(200).json({ message: 'Total budget', totalBudget });
 	} catch (error) {
 		res.status(500).json(error.message);
 	}

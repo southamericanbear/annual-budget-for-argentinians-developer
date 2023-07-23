@@ -1,11 +1,12 @@
 import { PrismaClient } from '@prisma/client';
-import { Budget } from '@/types';
+import { Budget } from '../../types';
 
 export class BudgetService {
 	static prisma = new PrismaClient();
 
 	async getBudgets() {
 		const budgets = await BudgetService.prisma.budget.findMany();
+
 		return budgets;
 	}
 
@@ -14,6 +15,16 @@ export class BudgetService {
 			where: { id: budgetId },
 		});
 		return budget;
+	}
+
+	async getTotalBudget() {
+		const {
+			_sum: { budgetTotal },
+		} = await BudgetService.prisma.budget.aggregate({
+			_sum: { budgetTotal: true },
+		});
+
+		return budgetTotal;
 	}
 
 	async createBudget(data: Budget) {

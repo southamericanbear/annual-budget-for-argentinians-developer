@@ -10,6 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+enum Category  {
+  salary
+  rent
+  food
+  entertainment
+  transportation
+  utilities
+  travel
+  health
+  other
+}
+
+
 model BasicData {
   id String @id @default(uuid())
   name String
@@ -25,4 +39,9 @@ model Budget {
   budgetTotal Float  @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
+  category Category @default(other)
 }
+
+
+
+
