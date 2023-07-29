@@ -10,8 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-enum Category  {
+enum BudgetCategory  {
   salary
   rent
   food
@@ -23,14 +22,26 @@ enum Category  {
   other
 }
 
-
-model BasicData {
-  id String @id @default(uuid())
-  name String
-  value String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+enum ExpensesCategory {
+  salary
+  rent
+  food
+  other
 }
+
+enum BasicDataCategory {
+  rent
+  salary
+  dollar
+  other
+}
+
+enum TransactionType {
+  income
+  expense
+}
+
+
 
 model Budget {
   id String @id @default(uuid())
@@ -39,9 +50,14 @@ model Budget {
   budgetTotal Float  @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
-  category Category @default(other)
+  category BudgetCategory @default(other)
 }
 
-
-
-
+model BasicData {
+  id String @id @default(uuid())
+  name String
+  value Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  category BasicDataCategory @default(other)
+}
