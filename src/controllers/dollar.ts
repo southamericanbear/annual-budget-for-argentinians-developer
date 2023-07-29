@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
 import googleSheetsService from '../services/google-sheets';
 import { getDollarBlueValue } from '../routes/dollar/use-cases/dollar-blue-value';
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { basicDataService } from '../services';
 
 export const getValueCellDollarBlue = async (): Promise<number> => {
 	try {
@@ -15,20 +14,18 @@ export const getValueCellDollarBlue = async (): Promise<number> => {
 };
 
 export const updateValueCellDollarBlue = async (): Promise<void> => {
+	const { value: dollarBlueValueDB } = await basicDataService.getDollarBlueValue();
 	try {
 		const currentValue = await getValueCellDollarBlue();
 
 		const { venta: value } = await getDollarBlueValue();
 
-		if (currentValue === value.toString()) {
+		if (currentValue === value.toString() && dollarBlueValueDB === value) {
 			console.log('Dolar blue sin cambios...😮‍💨');
 			return;
 		} else {
 			await googleSheetsService.updateSpecificCell('budget!I2:I2', value);
-			//	await prisma.basicData.update({
-			// 	where: { id: 1 },
-			// 	data: { dollarBlue: value },
-			// });
+			await basicDataService.updateDollarBlueValue(value);
 
 			console.log('Dolar blue actualizado...👀');
 		}

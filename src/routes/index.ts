@@ -1,4 +1,4 @@
 export { dollar } from './dollar';
 export { taxes } from './taxes';
-export { basicInfo } from './basic-info';
+export { basicData } from './basic-data';
 export { budgets } from './budgets';
