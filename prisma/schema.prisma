@@ -41,6 +41,16 @@ enum TransactionType {
   expense
 }
 
+enum AccountType {
+  cash
+  bank
+  credit
+  investing
+  savings
+  travel
+  other
+}
+
 
 
 model Budget {
@@ -60,4 +70,33 @@ model BasicData {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
   category BasicDataCategory @default(other)
+}
+
+
+model Expense {
+  id String @id @default(uuid())
+  name String
+  value Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  type TransactionType @default(expense)
+  category ExpensesCategory @default(other)
+}
+
+model Account {
+  id String @id @default(uuid())
+  name String
+  value Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  type AccountType @default(other)
+}
+
+model Taxes {
+  id String @id @default(uuid())
+  month String
+  totalInvoices Int
+  value Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
 }
