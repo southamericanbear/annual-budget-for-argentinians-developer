@@ -51,8 +51,6 @@ enum AccountType {
   other
 }
 
-
-
 model Budget {
   id String @id @default(uuid())
   name String
@@ -71,7 +69,6 @@ model BasicData {
   updatedAt DateTime @updatedAt @default(now())
   category BasicDataCategory @default(other)
 }
-
 
 model Expense {
   id String @id @default(uuid())
