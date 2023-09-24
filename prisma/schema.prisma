@@ -51,6 +51,21 @@ enum AccountType {
   other
 }
 
+enum UserTypes {
+  admin
+  user
+}
+
+
+model User {
+  id String @id @default(uuid())
+  email String @unique
+  password String
+  type UserTypes @default(user)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
 model Budget {
   id String @id @default(uuid())
   name String
