@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { basicData, budgets, dollar, taxes } from './routes';
+import { auth, basicData, budgets, dollar, taxes } from './routes';
 import { updateScheduleWeekDays } from './services/update-schedule';
 import { keepAlive } from './services/keep-alive';
 
@@ -12,6 +12,7 @@ class App {
 		this.server = express();
 		this.middlewares();
 		this.paths = {
+			auth: '/api/auth',
 			dollar: '/api/dollar',
 			taxes: '/api/taxes',
 			basicInfo: '/api/basic-data',
@@ -28,6 +29,7 @@ class App {
 	}
 
 	routes() {
+		this.server.use(this.paths.auth, auth);
 		this.server.use(this.paths.dollar, dollar);
 		this.server.use(this.paths.taxes, taxes);
 		this.server.use(this.paths.basicInfo, basicData);
