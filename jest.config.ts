@@ -15,5 +15,6 @@ export default async (): Promise<Config.InitialOptions> => {
 		transform: { '^.+\\.tsx?$': 'ts-jest' },
 		globalTeardown: './test/jest-globals-teardown.ts',
 		forceExit: true,
+		setupFilesAfterEnv: ['./test/singleton.ts'],
 	};
 };
