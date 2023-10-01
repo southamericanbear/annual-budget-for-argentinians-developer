@@ -1,3 +1,3 @@
 export { Budget, BudgetDetails } from './budget';
 export { BasicData, Category } from './basic-data';
-export { SignupParams } from './auth';
+export { SignupParams, LoginParams } from './auth';

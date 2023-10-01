@@ -9,3 +9,8 @@ export interface SignupParams {
 	password: string;
 	type?: UserType;
 }
+
+export interface LoginParams {
+	email: string;
+	password: string;
+}
