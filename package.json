@@ -7,7 +7,7 @@
 	"scripts": {
 		"build": "yarn install && tsc --project ./",
 		"dev": "nodemon src/server.ts",
-		"prod": "ls && node dist/server.js",
+		"prod": "ls dist/ && node ./dist/server.js",
 		"test": "jest --runInBand",
 		"test:watch": "jest --runInBand --watchAll",
 		"format": "prettier --write .",
