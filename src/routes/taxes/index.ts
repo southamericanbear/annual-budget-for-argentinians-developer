@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { updateValueCellInvoices } from '../../controllers';
+// import { updateValueCellInvoices } from '../../controllers';
 import FirebaseService from '../../services/firebase-service';
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -11,7 +11,7 @@ routes.get('/get-taxes-stats', async (req, res) => {
 	const { year, month } = req.query;
 
 	try {
-		await updateValueCellInvoices(year as string, month as string);
+		// await updateValueCellInvoices(year as string, month as string);
 		res.status(200).send('value updated');
 	} catch (error) {
 		res.status(404).send(error);

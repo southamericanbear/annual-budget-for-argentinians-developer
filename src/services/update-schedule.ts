@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { updateValueCellDollarBlue } from '../controllers';
+// import { updateValueCellDollarBlue } from '../controllers';
 
 export const updateScheduleWeekDays = (interval: number) => {
 	// Call the function every hour between 10am and 4pm from Monday to Friday
@@ -9,7 +9,7 @@ export const updateScheduleWeekDays = (interval: number) => {
 		const hourOfDay = date.getHours();
 		if (dayOfWeek >= 1 && dayOfWeek <= 5 && hourOfDay >= 10 && hourOfDay <= 18) {
 			// USAR LA API DE https://github.com/pjnovas/nolaborables PARA SABER SI HOY ES FERIADO O NO Y EVITAR LLAMAR A CAMBIAR EL DOLAR
-			updateValueCellDollarBlue();
+			// updateValueCellDollarBlue();
 		} else {
 			console.log('Hoy descansamos es fin de semana...🫠');
 		}
@@ -21,6 +21,6 @@ export const updateScheduleWeekDays = (interval: number) => {
 
 export const updateScheduleAllDays = (interval: number) => {
 	setInterval(() => {
-		updateValueCellDollarBlue();
+		// updateValueCellDollarBlue();
 	}, interval);
 };
