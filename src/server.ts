@@ -3,6 +3,8 @@
 require('dotenv').config();
 import app from './app';
 
-app.listen(1990, () => {
-	console.log('🚀 Server started on port 1990!');
+const PORT = process.env.PORT || 1990;
+
+app.listen(PORT, () => {
+	console.log(`🚀 Server started on port ${PORT}!`);
 });
