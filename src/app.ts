@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import { auth, base, basicData, budgets, dollar, taxes } from './routes';
-import { updateScheduleWeekDays } from './services/update-schedule';
-import { keepAlive } from './services/keep-alive';
+// import { updateScheduleWeekDays } from './services/update-schedule';
+// import { keepAlive } from './services/keep-alive';
 
 class App {
 	public server;
@@ -20,8 +20,8 @@ class App {
 			budgets: '/api/budgets',
 		};
 		this.routes();
-		keepAlive();
-		updateScheduleWeekDays(600000);
+		//	keepAlive();
+		// updateScheduleWeekDays(600000);
 	}
 
 	middlewares() {
