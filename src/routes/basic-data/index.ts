@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import { getBasicData, getSpecificBasicDataById, createBasicData, updateBasicData, deleteBasicData } from '../../controllers';
+import { jwtValidator } from '../../middlewares';
 
 const routes = Router();
 
-routes.get('/', async (req, res) => {
+routes.get('/', jwtValidator, async (req, res) => {
 	try {
 		const data = await getBasicData();
 		return res.status(200).json(data);
