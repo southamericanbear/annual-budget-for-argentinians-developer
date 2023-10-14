@@ -115,7 +115,7 @@ model Taxes {
   month String
   year String
   value Float
-  taxUrl String
+  invoicesAmount Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
 }
