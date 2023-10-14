@@ -1,15 +1,22 @@
 import { Router } from 'express';
-import { getDollarBlueValue } from './use-cases/dollar-blue-value';
+import { getDollarBlueValue, updateDollarBlueValue } from './use-cases/dollar-blue-value';
+import { jwtValidator } from '../../middlewares';
 
 const routes = Router();
 
-routes.get('/', (req, res) => {
-	res.send('Base route to get dollars');
+routes.get('/', jwtValidator, async (req, res) => {
+	try {
+		const value = await getDollarBlueValue();
+
+		res.status(200).json(value);
+	} catch (error) {
+		res.json(error.message);
+	}
 });
 
-routes.get('/get-dollar-blue-value', async (req, res) => {
+routes.put('/update-dollar-blue-value', jwtValidator, async (req, res) => {
 	try {
-		const dollarBlueValue = await getDollarBlueValue();
+		const dollarBlueValue = await updateDollarBlueValue();
 
 		res.status(200).json(dollarBlueValue);
 	} catch (error) {

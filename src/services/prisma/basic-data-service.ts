@@ -57,16 +57,16 @@ export class BasicDataService {
 	async getDollarBlueValue() {
 		const dollarBlueValue = await BasicDataService.prisma.basicData.findFirst({
 			where: {
-				name: 'dollar blue',
+				id: '35981cfb-3c76-46a3-85a3-a4c379987582',
 			},
 		});
 		return dollarBlueValue;
 	}
 
-	async updateDollarBlueValue(value: number) {
+	async updateDollarBlueValue(id: string, value: number) {
 		await BasicDataService.prisma.basicData.updateMany({
 			where: {
-				name: 'dollar blue',
+				id: id,
 			},
 			data: {
 				value: value,
