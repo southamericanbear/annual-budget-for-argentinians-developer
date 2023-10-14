@@ -1,13 +1,13 @@
 import { basicDataService } from '../services';
 import { BasicData } from '../types';
 
-export const getBasicData = async () => {
-	const basicData = await basicDataService.getBasicData();
+export const getBasicData = async (userId: string) => {
+	const basicData = await basicDataService.getBasicData(userId);
 	return basicData;
 };
 
-export const getSpecificBasicDataById = async (id: string) => {
-	const basicData = await basicDataService.getSpecificBasicDataById(id);
+export const getSpecificBasicDataById = async (id: string, userId: string) => {
+	const basicData = await basicDataService.getSpecificBasicDataById(id, userId);
 	return basicData;
 };
 
@@ -16,12 +16,12 @@ export const createBasicData = async (data: BasicData) => {
 	return basicData;
 };
 
-export const updateBasicData = async (id: string, data: BasicData) => {
-	const basicData = await basicDataService.updateBasicData(id, data);
+export const updateBasicData = async (id: string, data: BasicData, userId: string) => {
+	const basicData = await basicDataService.updateBasicData(id, data, userId);
 	return basicData;
 };
 
-export const deleteBasicData = async (id: string) => {
-	const basicData = await basicDataService.deleteBasicData(id);
+export const deleteBasicData = async (id: string, userId: string) => {
+	const basicData = await basicDataService.deleteBasicData(id, userId);
 	return basicData;
 };

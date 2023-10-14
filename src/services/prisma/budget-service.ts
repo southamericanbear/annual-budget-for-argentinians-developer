@@ -4,23 +4,26 @@ import { Budget } from '../../types';
 export class BudgetService {
 	static prisma = new PrismaClient();
 
-	async getBudgets() {
-		const budgets = await BudgetService.prisma.budget.findMany();
+	async getBudgets(userId: string) {
+		const budgets = await BudgetService.prisma.budget.findMany({ where: { user_id: userId } });
 
 		return budgets;
 	}
 
-	async getBudgetById(budgetId: string) {
-		const budget = await BudgetService.prisma.budget.findUnique({
-			where: { id: budgetId },
+	async getBudgetById(budgetId: string, userId: string) {
+		const budget = await BudgetService.prisma.budget.findFirst({
+			where: {
+				AND: [{ id: budgetId }, { user_id: userId }],
+			},
 		});
 		return budget;
 	}
 
-	async getTotalBudget() {
+	async getTotalBudget(userId: string) {
 		const {
 			_sum: { budgetTotal },
 		} = await BudgetService.prisma.budget.aggregate({
+			where: { user_id: userId },
 			_sum: { budgetTotal: true },
 		});
 
@@ -32,7 +35,11 @@ export class BudgetService {
 		return budget;
 	}
 
-	async updateBudget(budgetId: string, data: Budget) {
+	async updateBudget(budgetId: string, data: Budget, userId: string) {
+		if (!(await this.budgetExists(budgetId, userId))) {
+			throw new Error('Budget does not exist');
+		}
+
 		const budget = await BudgetService.prisma.budget.update({
 			where: { id: budgetId },
 			data,
@@ -40,11 +47,23 @@ export class BudgetService {
 		return budget;
 	}
 
-	async deleteBudget(budgetId: string) {
+	async deleteBudget(budgetId: string, userId: string) {
+		if (!(await this.budgetExists(budgetId, userId))) {
+			throw new Error('Budget does not exist');
+		}
+
 		const budget = await BudgetService.prisma.budget.delete({
 			where: { id: budgetId },
 		});
 		return budget.id;
+	}
+
+	async budgetExists(budgetId: string, userId: string) {
+		return await BudgetService.prisma.budget.findFirst({
+			where: {
+				AND: [{ id: budgetId }, { user_id: userId }],
+			},
+		});
 	}
 }
 

@@ -113,8 +113,9 @@ model Taxes {
   id String @id @default(uuid())
   user_id String
   month String
-  totalInvoices Int
+  year String
   value Float
+  invoicesAmount Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
 }
