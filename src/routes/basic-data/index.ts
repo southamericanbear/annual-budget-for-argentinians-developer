@@ -33,6 +33,7 @@ routes.post('/', createBasicDataValidator, async (req: Request, res: Response) =
 			value: body.value,
 			category: body.category,
 			user_id: body.user_id,
+			currency: body.currency,
 		};
 		const data = await createBasicData(payload);
 		return res.status(200).json({ message: 'Basic data created', data });

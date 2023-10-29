@@ -83,6 +83,7 @@ model BasicData {
   user_id String
   name String
   value Float
+  currency String @default("USD")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
   category BasicDataCategory @default(other)
