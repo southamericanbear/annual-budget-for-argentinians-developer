@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import { auth, base, basicData, budgets, dollar, taxes, getDollarBlueValue, updateDollarBlueValue } from '@routes/index';
-// import { getDollarBlueValue, updateDollarBlueValue } from './routes/dollar/use-cases/dollar-blue-value';
+import { auth, base, basicData, budgets, dollar, taxes } from './routes';
+import { getDollarBlueValue, updateDollarBlueValue } from './routes/dollar/use-cases/dollar-blue-value';
 // import { updateScheduleWeekDays } from './services/update-schedule';
 // import { keepAlive } from './services/keep-alive';
 

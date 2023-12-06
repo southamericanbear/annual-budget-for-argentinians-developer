@@ -9,11 +9,8 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*"],
-      "@controllers/*": ["src/controllers/*"], // Example for controllers
-      "@services/*": ["src/services/*"], // Example for services
-      "@models/*": ["src/models/*"], // Example for models
-      "@routes/*": ["src/routes/*"] // Example for routes
+      // "*": ["node_modules/*"],
+      "@/*": ["src/*"]
     }
   },
   "include": ["src/**/*", ".eslintrc.js", "test/client.ts"]
