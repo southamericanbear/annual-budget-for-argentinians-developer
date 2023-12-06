@@ -1,16 +1,20 @@
 {
-	"compilerOptions": {
-		"module": "commonjs",
-		"esModuleInterop": true,
-		"target": "es6",
-		"noImplicitAny": true,
-		"moduleResolution": "node",
-		"sourceMap": true,
-		"outDir": "dist",
-		"baseUrl": ".",
-		"paths": {
-			"*": ["node_modules/*"]
-		}
-	},
-	"include": ["src/**/*", ".eslintrc.js", "test/client.ts"]
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*"],
+      "@controllers/*": ["src/controllers/*"], // Example for controllers
+      "@services/*": ["src/services/*"], // Example for services
+      "@models/*": ["src/models/*"], // Example for models
+      "@routes/*": ["src/routes/*"] // Example for routes
+    }
+  },
+  "include": ["src/**/*", ".eslintrc.js", "test/client.ts"]
 }
