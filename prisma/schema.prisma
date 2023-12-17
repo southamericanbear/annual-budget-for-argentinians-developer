@@ -101,6 +101,7 @@ model Expense {
   user_id String
   name String
   value Float
+  details Json?  @default("{}")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
   type TransactionType @default(expense)

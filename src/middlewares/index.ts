@@ -1,3 +1,3 @@
 export { jwtValidator } from './jwt-validator';
-export { validationFields } from './validationFields';
-export { checkFile } from './checkFiles';
+export { validationFields } from './validation-fields';
+export { checkFile } from './check-files';
