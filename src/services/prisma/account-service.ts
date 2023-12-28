@@ -1,4 +1,4 @@
-import { Account } from '@/types';
+import { Account } from '../../types';
 import { PrismaClient } from '@prisma/client';
 
 export class AccountService {
