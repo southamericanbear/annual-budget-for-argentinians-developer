@@ -5,3 +5,4 @@ export { budgets } from './budgets';
 export { auth } from './auth';
 export { base } from './base';
 export { getDollarBlueValue, updateDollarBlueValue } from './dollar/use-cases/dollar-blue-value';
+export { account } from './account';
