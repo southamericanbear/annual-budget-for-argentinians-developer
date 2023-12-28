@@ -9,11 +9,11 @@ export enum AccountType {
 }
 
 export interface Account {
-  id: string;
+  id?: string;
   user_id: string;
   name: string;
   value: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
   type: AccountType;
 }
