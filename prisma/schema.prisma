@@ -10,18 +10,127 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model BasicData {
+enum BudgetCategory  {
+  salary
+  rent
+  food
+  entertainment
+  transportation
+  utilities
+  travel
+  health
+  other
+}
+
+enum ExpensesCategory {
+  salary
+  rent
+  food
+  other
+}
+
+enum BasicDataCategory {
+  rent
+  salary
+  dollar
+  other
+}
+
+enum TransactionType {
+  income
+  expense
+}
+
+enum AccountType {
+  cash
+  bank
+  credit
+  investing
+  savings
+  travel
+  other
+}
+
+enum UserTypes {
+  admin
+  user
+}
+
+
+model User {
   id String @id @default(uuid())
   name String
-  value String
+  email String @unique
+  password String
+  type UserTypes @default(user)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
+
+  @@map("users")
 }
 
 model Budget {
   id String @id @default(uuid())
+  user_id String
   name String
   budgetDetails Json
+  budgetTotal Float  @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
+  category BudgetCategory @default(other)
+
+
+  @@map("budgets")
+}
+
+model BasicData {
+  id String @id @default(uuid())
+  user_id String
+  name String
+  value Float
+  currency String @default("USD")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  category BasicDataCategory @default(other)
+
+  @@map("basic_data")
+}
+
+model Expense {
+  id String @id @default(uuid())
+  user_id String
+  name String
+  value Float
+  details Json?  @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  type TransactionType @default(expense)
+  category ExpensesCategory @default(other)
+
+  @@map("expenses")
+}
+
+model Account {
+  id String @id @default(uuid())
+  user_id String
+  name String
+  value Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  type AccountType @default(other)
+
+  @@map("accounts")
+}
+
+model Taxes {
+  id String @id @default(uuid())
+  user_id String
+  month String
+  year String
+  value Float
+  invoicesAmount Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+
+  @@map("taxes")
 }
