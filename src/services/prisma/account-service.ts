@@ -1,11 +1,11 @@
-import { Account } from '../../types';
+import { Account, AccountTransaction } from '../../types';
 import { PrismaClient } from '@prisma/client';
 
 export class AccountService {
   static prisma = new PrismaClient();
 
   async getAccounts(userId: string) {
-    const accounts = await AccountService.prisma.account.findMany({ where: { user_id: userId } });
+    const accounts = await AccountService.prisma.account.findMany({ where: { user_id: userId }, include: { transactions: true } });
 
     return accounts;
   }
@@ -14,6 +14,9 @@ export class AccountService {
     const account = await AccountService.prisma.account.findFirst({
       where: {
         AND: [{ id: accountId }, { user_id: userId }],
+      },
+      include: {
+        transactions: true,
       },
     });
     return account;
@@ -52,6 +55,47 @@ export class AccountService {
       where: {
         AND: [{ id: accountId }, { user_id: userId }],
       },
+    });
+  }
+
+  async getTransactionsByAccountId(accountId: string) {
+    return await AccountService.prisma.accountTransaction.findMany({
+      where: {
+        accountId,
+      },
+    });
+  }
+
+  async createTransaction(transaction: AccountTransaction) {
+    const accountTransaction = await AccountService.prisma.accountTransaction.create({
+      data: transaction,
+    });
+
+    this.updateAccountValue(transaction.accountId, transaction.value);
+    return accountTransaction;
+  }
+
+  async updateTransaction(transactionId: string, transaction: AccountTransaction) {
+    const accountTransaction = await AccountService.prisma.accountTransaction.update({
+      where: { id: transactionId },
+      data: transaction,
+    });
+
+    this.updateAccountValue(accountTransaction.accountId, transaction.value);
+
+    return accountTransaction;
+  }
+
+  async deleteTransaction(transactionId: string) {
+    return await AccountService.prisma.accountTransaction.delete({
+      where: { id: transactionId },
+    });
+  }
+
+  private async updateAccountValue(accountId: string, value: number) {
+    await AccountService.prisma.account.update({
+      where: { id: accountId },
+      data: { value },
     });
   }
 }

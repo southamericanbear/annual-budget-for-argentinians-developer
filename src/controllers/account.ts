@@ -1,5 +1,5 @@
 import { accountService } from '../services';
-import { Account } from '../types';
+import { Account, AccountTransaction } from '../types';
 
 export const getAccounts = async (userId: string) => {
   const accounts = await accountService.getAccounts(userId);
@@ -24,4 +24,25 @@ export const updateAccount = async (accountId: string, data: Account, userId: st
 export const deleteAccount = async (accountId: string, userId: string) => {
   const account = await accountService.deleteAccount(accountId, userId);
   return account;
+};
+
+export const getTransactionsByAccountId = async (accountId: string) => {
+  const transactions = await accountService.getTransactionsByAccountId(accountId);
+  return transactions;
+};
+
+export const createAccountTransaction = async (data: AccountTransaction) => {
+  const transaction = await accountService.createTransaction(data);
+
+  return transaction;
+};
+
+export const updateAccountTransaction = async (transactionId: string, data: AccountTransaction) => {
+  const transaction = await accountService.updateTransaction(transactionId, data);
+  return transaction;
+};
+
+export const deleteAccountTransaction = async (transactionId: string) => {
+  const transaction = await accountService.deleteTransaction(transactionId);
+  return transaction;
 };

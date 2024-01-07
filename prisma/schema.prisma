@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum BudgetCategory  {
+enum BudgetCategory {
   salary
   rent
   food
@@ -56,81 +56,91 @@ enum UserTypes {
   user
 }
 
-
 model User {
-  id String @id @default(uuid())
-  name String
-  email String @unique
-  password String
-  type UserTypes @default(user)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  password  String
+  type      UserTypes @default(user)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
 
   @@map("users")
 }
 
 model Budget {
-  id String @id @default(uuid())
-  user_id String
-  name String
+  id            String         @id @default(uuid())
+  user_id       String
+  name          String
   budgetDetails Json
-  budgetTotal Float  @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
-  category BudgetCategory @default(other)
-
+  budgetTotal   Float          @default(0)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @default(now()) @updatedAt
+  category      BudgetCategory @default(other)
 
   @@map("budgets")
 }
 
 model BasicData {
-  id String @id @default(uuid())
-  user_id String
-  name String
-  value Float
-  currency String @default("USD")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
-  category BasicDataCategory @default(other)
+  id        String            @id @default(uuid())
+  user_id   String
+  name      String
+  value     Float
+  currency  String            @default("USD")
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @default(now()) @updatedAt
+  category  BasicDataCategory @default(other)
 
   @@map("basic_data")
 }
 
 model Expense {
-  id String @id @default(uuid())
-  user_id String
-  name String
-  value Float
-  details Json?  @default("{}")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
-  type TransactionType @default(expense)
-  category ExpensesCategory @default(other)
+  id        String           @id @default(uuid())
+  user_id   String
+  name      String
+  value     Float
+  details   Json?            @default("{}")
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @default(now()) @updatedAt
+  type      TransactionType  @default(expense)
+  category  ExpensesCategory @default(other)
 
   @@map("expenses")
 }
 
 model Account {
-  id String @id @default(uuid())
-  user_id String
-  name String
-  value Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
-  type AccountType @default(other)
+  id           String               @id @default(uuid())
+  user_id      String
+  name         String
+  value        Float
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @default(now()) @updatedAt
+  type         AccountType          @default(other)
+  transactions AccountTransaction[]
 
   @@map("accounts")
 }
 
-model Taxes {
-  id String @id @default(uuid())
-  user_id String
-  month String
-  year String
-  value Float
-  invoicesAmount Int
+model AccountTransaction {
+  id        String   @id @default(uuid())
+  accountId String
+  value     Float
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  account   Account  @relation(fields: [accountId], references: [id])
+
+  @@map("account_transactions")
+}
+
+model Taxes {
+  id             String   @id @default(uuid())
+  user_id        String
+  month          String
+  year           String
+  value          Float
+  invoicesAmount Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
 
   @@map("taxes")
 }

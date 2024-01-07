@@ -1,5 +1,15 @@
-import { createAccountValidator } from '../../utils';
-import { createAccount, deleteAccount, getAccounts, getSpecificAccountById, updateAccount } from '../../controllers';
+import { createAccountTransactionValidator, createAccountValidator } from '../../utils';
+import {
+  createAccount,
+  createAccountTransaction,
+  deleteAccount,
+  deleteAccountTransaction,
+  getAccounts,
+  getSpecificAccountById,
+  getTransactionsByAccountId,
+  updateAccount,
+  updateAccountTransaction,
+} from '../../controllers';
 import { jwtValidator } from '../../middlewares';
 import { Request, Response, Router } from 'express';
 
@@ -66,6 +76,58 @@ routes.delete('/:id', jwtValidator, async (req, res) => {
     const data = await deleteAccount(id, req.body.user.userId);
 
     return res.status(200).json({ message: 'Account deleted', data });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+});
+
+routes.get('/:id/transactions', jwtValidator, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await getTransactionsByAccountId(id);
+
+    return res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+});
+
+routes.post('/:id/transactions', createAccountTransactionValidator, async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { body } = req;
+    body.accountId = id;
+    delete body.user;
+
+    const data = await createAccountTransaction(body);
+
+    return res.status(200).json({ message: 'Transaction created', data });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+});
+
+routes.put('/:id/transactions/:transactionId', jwtValidator, async (req, res) => {
+  try {
+    const { id, transactionId } = req.params;
+    const { body } = req;
+    body.accountId = id;
+    delete body.user;
+
+    const data = await updateAccountTransaction(transactionId, body);
+
+    return res.status(200).json({ message: 'Transaction updated', data });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+});
+
+routes.delete('/:id/transactions/:transactionId', jwtValidator, async (req, res) => {
+  try {
+    const { transactionId } = req.params;
+    await deleteAccountTransaction(transactionId);
+
+    return res.status(200).json({ message: 'Transaction deleted' });
   } catch (error) {
     res.status(500).json(error.message);
   }

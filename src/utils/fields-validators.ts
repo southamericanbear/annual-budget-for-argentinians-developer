@@ -27,3 +27,11 @@ export const createAccountValidator = [
   check('type', 'Account type is required').not().isEmpty().isIn(['cash', 'bank', 'credit', 'investing', 'savings', 'travel', 'other']),
   validationFields,
 ];
+
+export const createAccountTransactionValidator = [
+  jwtValidator,
+  check('value', 'Transaction value is required').isFloat(),
+  check('createdAt', 'Creation date is optional and must be a valid ISO 8601 date').optional().isISO8601(),
+  check('updatedAt', 'Update date is optional and must be a valid ISO 8601 date').optional().isISO8601(),
+  validationFields,
+];

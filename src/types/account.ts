@@ -17,3 +17,11 @@ export interface Account {
   updatedAt?: Date;
   type: AccountType;
 }
+
+export interface AccountTransaction {
+  id: string;
+  accountId: string;
+  value: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
