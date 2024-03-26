@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { account, auth, base, basicData, budgets, dollar, taxes } from './routes';
+import { account, auth, base, basicData, budgets, dollar, insights, taxes } from './routes';
 import { getDollarBlueValue, updateDollarBlueValue } from './routes/dollar/use-cases/dollar-blue-value';
 // import { updateScheduleWeekDays } from './services/update-schedule';
 // import { keepAlive } from './services/keep-alive';
@@ -20,6 +20,7 @@ class App {
       basicInfo: '/api/basic-data',
       budgets: '/api/budgets',
       accounts: '/api/accounts',
+      insights: '/api/insights',
     };
     this.routes();
     //	keepAlive();
@@ -40,6 +41,7 @@ class App {
     this.server.use(this.paths.budgets, budgets);
     this.server.use(this.paths.base, base);
     this.server.use(this.paths.accounts, account);
+    this.server.use(this.paths.insights, insights);
   }
 
   async updateDollarBlue() {
