@@ -19,9 +19,9 @@ export interface Account {
 }
 
 export interface AccountTransaction {
-  id: string;
+  id?: string;
   accountId: string;
   value: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

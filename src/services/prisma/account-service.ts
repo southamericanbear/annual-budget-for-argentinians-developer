@@ -28,7 +28,9 @@ export class AccountService {
   }
 
   async updateAccount(accountId: string, data: Account, userId: string) {
-    if (!(await this.accountExists(accountId, userId))) {
+    const accountExits = await this.accountExists(accountId, userId);
+
+    if (!accountExits) {
       throw new Error('Account does not exist');
     }
 
@@ -36,6 +38,13 @@ export class AccountService {
       where: { id: accountId },
       data,
     });
+
+    if (data.value !== accountExits.value) {
+      this.createTransaction({
+        accountId,
+        value: data.value,
+      });
+    }
     return account;
   }
 
