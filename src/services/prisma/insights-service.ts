@@ -13,6 +13,8 @@ export class InsightsService {
           name: true,
           value: true,
           currency: true,
+          id: true,
+          updatedAt: true,
         },
       }),
       InsightsService.prisma.account.findMany({
@@ -24,6 +26,7 @@ export class InsightsService {
           name: true,
           value: true,
           type: true,
+          updatedAt: true,
         },
       }),
     ]);
