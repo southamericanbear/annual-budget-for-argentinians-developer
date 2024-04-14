@@ -5,7 +5,10 @@ export class AccountService {
   static prisma = new PrismaClient();
 
   async getAccounts(userId: string) {
-    const accounts = await AccountService.prisma.account.findMany({ where: { user_id: userId }, include: { transactions: true } });
+    const accounts = await AccountService.prisma.account.findMany({
+      where: { active: true, userId },
+      include: { transactions: true },
+    });
 
     return accounts;
   }
@@ -13,7 +16,7 @@ export class AccountService {
   async getAccountById(accountId: string, userId: string) {
     const account = await AccountService.prisma.account.findFirst({
       where: {
-        AND: [{ id: accountId }, { user_id: userId }],
+        AND: [{ id: accountId }, { userId }, { active: true }],
       },
       include: {
         transactions: true,
@@ -23,7 +26,16 @@ export class AccountService {
   }
 
   async createAccount(data: Account) {
-    const account = await AccountService.prisma.account.create({ data });
+    const account = await AccountService.prisma.account.create({
+      data: {
+        name: data.name,
+        value: data.value,
+        type: data.type,
+        User: {
+          connect: { id: data.user_id },
+        }, // Add the missing 'User' property
+      },
+    });
     return account;
   }
 
@@ -40,10 +52,12 @@ export class AccountService {
     });
 
     if (data.value !== accountExits.value) {
-      this.createTransaction({
+      const payload = {
         accountId,
         value: data.value,
-      });
+      };
+
+      this.createTransaction(payload as AccountTransaction);
     }
     return account;
   }
@@ -53,8 +67,11 @@ export class AccountService {
       throw new Error('Account does not exist');
     }
 
-    const account = await AccountService.prisma.account.delete({
+    const account = await AccountService.prisma.account.update({
       where: { id: accountId },
+      data: {
+        active: false,
+      },
     });
     return account.id;
   }
@@ -62,7 +79,7 @@ export class AccountService {
   async accountExists(accountId: string, userId: string) {
     return await AccountService.prisma.account.findFirst({
       where: {
-        AND: [{ id: accountId }, { user_id: userId }],
+        AND: [{ id: accountId }, { userId }],
       },
     });
   }

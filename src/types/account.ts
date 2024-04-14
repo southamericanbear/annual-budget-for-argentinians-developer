@@ -21,6 +21,7 @@ export interface Account {
 export interface AccountTransaction {
   id?: string;
   accountId: string;
+  userId: string;
   value: number;
   createdAt?: Date;
   updatedAt?: Date;

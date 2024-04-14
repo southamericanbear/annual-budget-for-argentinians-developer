@@ -97,6 +97,7 @@ routes.post('/:id/transactions', createAccountTransactionValidator, async (req: 
     const { id } = req.params;
     const { body } = req;
     body.accountId = id;
+    body.userId = req.body.user.userId;
     delete body.user;
 
     const data = await createAccountTransaction(body);

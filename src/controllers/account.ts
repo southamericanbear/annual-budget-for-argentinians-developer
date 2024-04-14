@@ -1,5 +1,5 @@
+import { Account, AccountTransaction } from '.././types';
 import { accountService } from '../services';
-import { Account, AccountTransaction } from '../types';
 
 export const getAccounts = async (userId: string) => {
   const accounts = await accountService.getAccounts(userId);

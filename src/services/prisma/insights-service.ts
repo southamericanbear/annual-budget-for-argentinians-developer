@@ -7,7 +7,7 @@ export class InsightsService {
     const [basicData, accounts] = await Promise.all([
       InsightsService.prisma.basicData.findMany({
         where: {
-          user_id: userId,
+          userId,
         },
         select: {
           name: true,
@@ -19,7 +19,7 @@ export class InsightsService {
       }),
       InsightsService.prisma.account.findMany({
         where: {
-          user_id: userId,
+          userId,
         },
         select: {
           id: true,

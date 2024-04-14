@@ -1,5 +1,6 @@
+import { Budget } from '@prisma/client';
+
 import { budgetService } from '../services';
-import { Budget } from '../types';
 
 export const getBudgets = async (userId: string): Promise<Budget[]> => {
   const budgets = await budgetService.getBudgets(userId);

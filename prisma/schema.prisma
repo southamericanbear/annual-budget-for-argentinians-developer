@@ -57,90 +57,106 @@ enum UserTypes {
 }
 
 model User {
-  id        String    @id @default(uuid())
+  id        String      @id @default(uuid())
   name      String
-  email     String    @unique
+  email     String      @unique
   password  String
-  type      UserTypes @default(user)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now()) @updatedAt
+  type      UserTypes   @default(user)
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @default(now()) @updatedAt @map("updated_at")
+  accounts  Account[]
+  budgets   Budget[]
+  basicData BasicData[]
+  expenses  Expense[]
+  taxes     Taxes[]
 
   @@map("users")
 }
 
 model Budget {
   id            String         @id @default(uuid())
-  user_id       String
   name          String
   budgetDetails Json
   budgetTotal   Float          @default(0)
+  active        Boolean        @default(true)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @default(now()) @updatedAt
   category      BudgetCategory @default(other)
+  User          User           @relation(fields: [userId], references: [id])
+  userId        String         @map("user_id")
 
   @@map("budgets")
 }
 
 model BasicData {
   id        String            @id @default(uuid())
-  user_id   String
   name      String
   value     Float
+  active    Boolean           @default(true)
   currency  String            @default("USD")
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @default(now()) @updatedAt
+  createdAt DateTime          @default(now()) @map("created_at")
+  updatedAt DateTime          @default(now()) @updatedAt @map("updated_at")
   category  BasicDataCategory @default(other)
+  User      User              @relation(fields: [userId], references: [id])
+  userId    String            @map("user_id")
 
   @@map("basic_data")
 }
 
 model Expense {
   id        String           @id @default(uuid())
-  user_id   String
   name      String
   value     Float
   details   Json?            @default("{}")
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @default(now()) @updatedAt
+  createdAt DateTime         @default(now()) @map("created_at")
+  updatedAt DateTime         @default(now()) @updatedAt @map("updated_at")
   type      TransactionType  @default(expense)
   category  ExpensesCategory @default(other)
+  User      User             @relation(fields: [userId], references: [id])
+  userId    String           @map("user_id")
 
   @@map("expenses")
 }
 
 model Account {
   id           String               @id @default(uuid())
-  user_id      String
   name         String
   value        Float
-  createdAt    DateTime             @default(now())
-  updatedAt    DateTime             @default(now()) @updatedAt
+  active       Boolean              @default(true)
+  createdAt    DateTime             @default(now()) @map("created_at")
+  updatedAt    DateTime             @default(now()) @updatedAt @map("updated_at")
   type         AccountType          @default(other)
   transactions AccountTransaction[]
+  User         User                 @relation(fields: [userId], references: [id])
+  userId       String               @map("user_id")
 
   @@map("accounts")
 }
 
 model AccountTransaction {
-  id        String   @id @default(uuid())
-  accountId String
-  value     Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  account   Account  @relation(fields: [accountId], references: [id])
+  id          String   @id @default(uuid())
+  accountId   String   @map("account_id")
+  value       Float
+  description Json?    @default("{}")
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+  account     Account  @relation(fields: [accountId], references: [id])
 
   @@map("account_transactions")
 }
 
 model Taxes {
   id             String   @id @default(uuid())
-  user_id        String
   month          String
   year           String
   value          Float
-  invoicesAmount Int
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @default(now()) @updatedAt
+  active         Boolean  @default(true)
+  invoicesAmount Int      @map("invoices_amount")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at")
+  User           User     @relation(fields: [userId], references: [id])
+  userId         String   @map("user_id")
 
   @@map("taxes")
 }

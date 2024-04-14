@@ -1,5 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-import { BasicData } from '../../types';
+import { PrismaClient, BasicData } from '@prisma/client';
 
 export class BasicDataService {
   static prisma = new PrismaClient();
@@ -7,7 +6,7 @@ export class BasicDataService {
   async getBasicData(userId: string) {
     const basicData = await BasicDataService.prisma.basicData.findMany({
       where: {
-        user_id: userId,
+        userId,
       },
     });
     return basicData;
@@ -16,7 +15,7 @@ export class BasicDataService {
   async getSpecificBasicDataById(id: string, userId: string) {
     const basicData = await BasicDataService.prisma.basicData.findFirst({
       where: {
-        AND: [{ id: id }, { user_id: userId }],
+        AND: [{ id: id }, { userId }],
       },
     });
     return basicData;
@@ -77,7 +76,7 @@ export class BasicDataService {
   async basicDataExists(id: string, userId: string) {
     return await BasicDataService.prisma.basicData.findFirst({
       where: {
-        AND: [{ id: id }, { user_id: userId }],
+        AND: [{ id: id }, { userId }],
       },
     });
   }
