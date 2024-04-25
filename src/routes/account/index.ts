@@ -43,6 +43,7 @@ routes.post('/', createAccountValidator, async (req: Request, res: Response) => 
     const payload = {
       name: body.name,
       value: body.value,
+      currency: body.currency,
       user_id: body.user_id,
       type: body.type,
     };

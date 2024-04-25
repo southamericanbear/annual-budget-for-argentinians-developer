@@ -13,6 +13,7 @@ export interface Account {
   user_id: string;
   name: string;
   value: number;
+  currency?: string;
   createdAt?: Date;
   updatedAt?: Date;
   type: AccountType;

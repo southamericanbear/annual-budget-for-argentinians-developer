@@ -30,6 +30,7 @@ export class AccountService {
       data: {
         name: data.name,
         value: data.value,
+        currency: data.currency,
         type: data.type,
         User: {
           connect: { id: data.user_id },
